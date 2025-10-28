@@ -82,4 +82,6 @@ Arquivo relevante:
 - `src/contexts/AuthContext.tsx` e `src/hooks/useAuth.tsx` — autenticação e controle de sessão
 - `src/pages/` — páginas expostas (Dashboard, Refund, SignIn, SignUp, Confirm)
 
-Mantive o README enxuto e focado nas informações técnicas essenciais para desenvolvedores.
+## Backend/API
+
+- https://github.com/lucaswcode/api-refund
