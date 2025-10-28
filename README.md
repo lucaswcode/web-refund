@@ -1,62 +1,85 @@
 # Refund Web App
 
-Sistema web para gerenciamento de reembolsos desenvolvido com React, TypeScript e Vite.
+Aplicação front-end para gerenciamento de reembolsos empresariais. Funcionários podem submeter solicitações com comprovantes; gerentes visualizam, aprovam ou rejeitam pedidos. Implementa autenticação, upload de arquivos, validação de formulários e um dashboard com paginação.
 
 ## Descrição Técnica
 
-Aplicação front-end para gerenciamento de solicitações de reembolso com diferentes níveis de acesso (funcionários e gerentes). Implementa autenticação de usuários, upload de comprovantes, dashboard para visualização de solicitações e fluxo de aprovação/rejeição.
+- Cliente SPA em React + TypeScript construído com Vite.
+- Fluxos principais: autenticação (context + hook), criação de reembolso com upload de comprovante, listagem paginada, e aprovação/rejeição por papéis (employee/manager).
+- Comunicação com API via um serviço central (`src/services/api.ts`). Validação de entrada com esquemas (Zod) antes do envio.
 
-## Principais Bibliotecas
+## Principais Bibliotecas e responsabilidades
 
-- **React (v19)**: Framework JavaScript para construção da interface
-- **TypeScript**: Adiciona tipagem estática ao JavaScript
-- **Vite**: Build tool e dev server otimizado
-- **React Router (v7)**: Gerenciamento de rotas e navegação
-- **TailwindCSS**: Framework CSS utilitário para estilização
-- **clsx + tailwind-merge**: Utilitários para composição condicional de classes CSS
+- **React**: UI declarativa.
+- **TypeScript**: tipagem estática e segurança em tempo de compilação.
+- **Vite**: dev server e build rápido.
+- **React Router**: definição de rotas e proteção por perfil.
+- **Axios**: cliente HTTP usado em `src/services/api.ts` para chamadas à API.
+- **Zod**: validação e parsing de dados de formulários antes de enviar para a API.
+- **Tailwind CSS**: estilização utilitária.
+- **clsx** e **tailwind-merge**: composição condicional e mesclagem segura de classes Tailwind.
 
-## Padrão de Projeto
+## Padrão de organização do código
 
-O projeto segue uma arquitetura modular organizada em:
+Estrutura principal em `src/` com separação clara entre camadas:
 
 ```
 src/
-├── components/    # Componentes reutilizáveis
-├── pages/        # Componentes de página
-├── routes/       # Configuração de rotas e proteção de acesso
-├── utils/        # Funções utilitárias
-└── assets/       # Recursos estáticos
+├── components/    # Componentes reutilizáveis (UI)
+├── pages/         # Páginas/rotas (Dashboard, Refund, SignIn, SignUp, etc.)
+├── routes/        # Definição de rotas públicas/protegidas por perfil
+├── contexts/      # Contextos (ex.: AuthContext)
+├── hooks/         # Hooks customizados (ex.: useAuth)
+├── services/      # Serviços de integração (ex.: api.ts com axios)
+├── utils/         # Utilitários (formatação, helpers)
+└── assets/        # Imagens e recursos estáticos
 ```
 
-- Utiliza TypeScript para type-safety
-- Implementa roteamento protegido por perfil de usuário
-- Componentização para reusabilidade
-- Separação clara entre lógica de negócio e apresentação
+- Separação entre apresentação e lógica: componentes puros na pasta `components` e lógica de chamadas/estado em `services` / `contexts` / `hooks`.
+- Validação de dados com Zod antes de chamadas de rede.
 
-## Setup e Execução
+## Variáveis de ambiente
 
-1. Instale as dependências:
+Crie um arquivo `.env` ou `.env.local` na raiz com pelo menos:
+
+```
+VITE_API_URL=https://api.exemplo.com
+```
+
+## Setup e execução
+
+1. Instalar dependências:
 
 ```bash
 npm install
 ```
 
-2. Execute o projeto em modo desenvolvimento:
+2. Rodar em desenvolvimento:
 
 ```bash
 npm run dev
 ```
 
-3. Para build de produção:
+3. Build para produção:
 
 ```bash
 npm run build
 ```
 
-4. Para preview do build:
+4. Preview do build:
 
 ```bash
 npm run preview
 ```
 
-O servidor de desenvolvimento será iniciado em `http://localhost:5173` por padrão.
+O servidor de desenvolvimento padrão do Vite usa `http://localhost:5173`.
+
+---
+
+Arquivo relevante:
+
+- `src/services/api.ts` — cliente axios central
+- `src/contexts/AuthContext.tsx` e `src/hooks/useAuth.tsx` — autenticação e controle de sessão
+- `src/pages/` — páginas expostas (Dashboard, Refund, SignIn, SignUp, Confirm)
+
+Mantive o README enxuto e focado nas informações técnicas essenciais para desenvolvedores.
